@@ -8,15 +8,11 @@ This is a temporary script file.
 from skimage.io import imread
 from skimage.filters import threshold_otsu
 import matplotlib.pyplot as plt
+from skimage.util import crop
 
-car_image = imread("car6.jpg", as_grey=True)
-# it should be a 2 dimensional array
+im = imread("frame9.jpg", as_grey=True)
+car_image = crop(im, ((500, 2200), (40, 900)), copy=False)
 print(car_image.shape)
-
-# the next line is not compulsory however, a grey scale pixel
-# in skimage ranges between 0 & 1. multiplying it with 255
-# will make it range between 0 & 255 (something we can relate better with
-
 gray_car_image = car_image * 255
 fig, (ax1, ax2) = plt.subplots(1, 2)
 ax1.imshow(gray_car_image, cmap="gray")
@@ -24,4 +20,17 @@ threshold_image = threshold_otsu(gray_car_image)
 binary_car_image = gray_car_image > threshold_image
 ax2.imshow(binary_car_image, cmap="gray")
 plt.show()
-#sax1.imshow(fig, cmap="gray")
+
+car_image1 = crop(im, ((400, 2000), (900, 200)), copy=False)
+print(car_image1.shape)
+gray_car_image1 = car_image1 * 255
+fig, (ax1, ax2) = plt.subplots(1, 2)
+ax1.imshow(gray_car_image1, cmap="gray")
+threshold_image1 = threshold_otsu(gray_car_image1)
+binary_car_image1 = gray_car_image1 > threshold_image1
+ax2.imshow(binary_car_image1, cmap="gray")
+plt.show()
+bins= [binary_car_image,binary_car_image1]
+g=[gray_car_image,gray_car_image1]
+
+
